@@ -39,7 +39,7 @@ open (IN1,$in1) or die $!;
 while (my $line=<IN1>) {
 	chomp $line;
 	my @array = split "\t",$line;
-        my $loc = join "_",($array[1],$array[2],$array[6]);
+        my $loc = join "_",($array[1],$array[3],$array[7]);
         $hash{$loc} = "exist";
 }
 close IN1;
@@ -51,7 +51,7 @@ open (OUT2,">${in2}_discard.tsv") or die $!;
 while (my $line=<IN2>) {
        chomp $line;
        my @array = split "\t",$line;
-       my $loc = join "_",($array[1],$array[2],$array[6]);
+       my $loc = join "_",($array[1],$array[3],$array[7]);
        if (! $hash{$loc}) {
           print OUT $line,"\n";
        } else {

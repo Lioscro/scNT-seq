@@ -5,10 +5,13 @@
 ## Pre-install requirment: Drop-seq computational pipeline(version 1.12), Java, Picardtools, samtools, STAR, perl
 
 sample=$1 # sample name
-index=$2 # sequencing index (the order in the samplesheet for demultliplexing: "_S1","_S2")
-analysis_dir=$3  # analysis directory 
+# index=$2 # sequencing index (the order in the samplesheet for demultliplexing: "_S1","_S2")
+# analysis_dir=$3  # analysis directory 
+fastq1=$2
+fastq2=$3
+output_dir=$4
 
-fastq_dir=$4 # fastq file directory after bcl2fastq
+# fastq_dir=$4 # fastq file directory after bcl2fastq
 
 dropseq_root=$5 ## the dropseq computational pipeline directory
 star_index_dir=$6 # reference indexed by STAR
@@ -16,18 +19,19 @@ fasta=$7 # reference sequence
 gtf=$8 # reference gtf
 
 num_barcodes=$9 # NUM_BARCODES= <roughly 2x the number of cells> 
-num_core_barcodes=$10 # the number of cells from scNT-seq run
+# num_core_barcodes=${10} # the number of cells from scNT-seq run
 
-TMP_dir=$11 # directory for temporary
-picard_root=$12 # picard tools directory
-
+TMP_dir=${10} # directory for temporary
+picard_root=${11} # picard tools directory
+STAR_root=${12} # STAR directory
+scripts_root=${13} # path to scripts directory
 
 ############ 0. create the folder
 
-output_dir=${analysis_dir}/${sample}_${index}_${genome}
+# output_dir=${analysis_dir}/${sample}_${index}_${genome}
 mkdir -p ${output_dir}
 
-output_dir_STAR_modified=${analysis_dir}/${sample}_${index}_${genome}/output_STAR_modified
+output_dir_STAR_modified=${output_dir}/output_STAR_modified
 mkdir -p ${output_dir_STAR_modified}
 
 star_result_dir=${output_dir}/STAR_results_modified0.3
@@ -36,8 +40,8 @@ mkdir -p ${star_result_dir}
 
 ############ 1. convert Fastq to unaligned BAM (picard)
 java -Xmx64g -Djava.io.tmpdir=${TMP_dir} -jar ${picard_root}/picard.jar FastqToSam \
-FASTQ=${fastq_dir}/${sample}_${index}_R1_001.fastq.gz \
-FASTQ2=${fastq_dir}/${sample}_${index}_R2_001.fastq.gz \
+FASTQ=${fastq1} \
+FASTQ2=${fastq2} \
 QUALITY_FORMAT=Standard \
 OUTPUT=${output_dir}/${sample}_unaligned.bam \
 SAMPLE_NAME=${sample} \
@@ -94,7 +98,7 @@ FASTQ=${output_dir}/${sample}_unaligned_barcode.tagged_filtered_smart.polyA.trim
 
 ############ 8. Aligment to genome
 gzip ${output_dir}/${sample}_unaligned_barcode.tagged_filtered_smart.polyA.trimmed.fastq
-STAR --runThreadN 10 --genomeDir ${star_index_dir} --outFilterScoreMinOverLread 0.3 --outFilterMatchNminOverLread 0.3 --readFilesCommand zcat --readFilesIn ${output_dir}/${sample}_unaligned_barcode.tagged_filtered_smart.polyA.trimmed.fastq --outFileNamePrefix ${star_result_dir}/${sample}_star
+${STAR_root}/STAR --runThreadN 32 --genomeDir ${star_index_dir} --outFilterScoreMinOverLread 0.3 --outFilterMatchNminOverLread 0.3 --readFilesCommand zcat --readFilesIn ${output_dir}/${sample}_unaligned_barcode.tagged_filtered_smart.polyA.trimmed.fastq.gz --outFileNamePrefix ${star_result_dir}/${sample}_star
 
 ############ 9. sort aligned sam file
 java -Xmx64g -Djava.io.tmpdir=${TMP_dir} -jar ${picard_root}/picard.jar SortSam \
@@ -118,7 +122,7 @@ OUTPUT=${output_dir_STAR_modified}/${sample}_starAligned.sorted.merged.GeneExonT
 ANNOTATIONS_FILE=$gtf TAG=GE
 
 ############ 12. reterive the intronic reads
-perl TagIntronicRead_V3.pl -gtf $gtf -bam ${output_dir_STAR_modified}/${sample}_starAligned.sorted.merged.GeneExonTagged.bam
+perl ${scripts_root}/TagIntronicRead_V3.pl -gtf $gtf -bam ${output_dir_STAR_modified}/${sample}_starAligned.sorted.merged.GeneExonTagged.bam
 
 ############ 13. Detect and repair barcode synthesis error
 java -Xmx64g -Djava.io.tmpdir=${TMP_dir} -jar ${dropseq_root}/jar/dropseq.jar DetectBeadSynthesisErrors \

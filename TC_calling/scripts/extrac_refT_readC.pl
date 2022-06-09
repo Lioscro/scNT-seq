@@ -36,10 +36,10 @@ open (OUT,">${in}_q${qual}.tsv") or die $!;
 while (my$line=<IN>) {
 	chomp $line;
 	my @array = split "\t",$line;
-	if ($array[8] =~/(M|=|X)/) {
+	if ($array[9] =~/(M|=|X)/) {
 #		if ($array[4] =~ /C/ && $array[7] =~ /T/) {
-                        if (ord($array[5])-33 > $qual) {
-			    print OUT $line,"\t",ord($array[5])-33,"\n";
+                        if (ord($array[6])-33 > $qual) {
+			    print OUT $line,"\t",ord($array[6])-33,"\n";
                         }
 #		}
 	}

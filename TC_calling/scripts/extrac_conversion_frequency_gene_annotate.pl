@@ -71,58 +71,58 @@ while (my$line=<IN>) {
 	chomp $line;
 	my @array = split "\t",$line;
 	if ($hash{$array[0]}) {
-        if (ord($array[5])-33 > $qual) {
+        if (ord($array[6])-33 > $qual) {
 		    if ($array[1] & 16) { # negative strand
-			    if ($array[7] =~ /A/){
+			    if ($array[8] =~ /A/){
 				    $total_T++;
-				    $T_to_T++ if ($array[4] =~ /A/);
-                    $T_to_G++ if ($array[4] =~ /C/);
-                    $T_to_C++ if ($array[4] =~ /G/);
-                    $T_to_A++ if ($array[4] =~ /T/);
-				} elsif ($array[7] =~ /G/){
+				    $T_to_T++ if ($array[5] =~ /A/);
+                    $T_to_G++ if ($array[5] =~ /C/);
+                    $T_to_C++ if ($array[5] =~ /G/);
+                    $T_to_A++ if ($array[5] =~ /T/);
+				} elsif ($array[8] =~ /G/){
 				    $total_C++;
-				    $C_to_T++ if ($array[4] =~ /A/);
-                    $C_to_G++ if ($array[4] =~ /C/);
-                    $C_to_C++ if ($array[4] =~ /G/);
-                    $C_to_A++ if ($array[4] =~ /T/);
-				} elsif ($array[7] =~ /C/){
+				    $C_to_T++ if ($array[5] =~ /A/);
+                    $C_to_G++ if ($array[5] =~ /C/);
+                    $C_to_C++ if ($array[5] =~ /G/);
+                    $C_to_A++ if ($array[5] =~ /T/);
+				} elsif ($array[8] =~ /C/){
 				    $total_G++;
-				    $G_to_T++ if ($array[4] =~ /A/);
-                    $G_to_G++ if ($array[4] =~ /C/);
-                    $G_to_C++ if ($array[4] =~ /G/);
-                    $G_to_A++ if ($array[4] =~ /T/);
-				} elsif ($array[7] =~ /T/){
+				    $G_to_T++ if ($array[5] =~ /A/);
+                    $G_to_G++ if ($array[5] =~ /C/);
+                    $G_to_C++ if ($array[5] =~ /G/);
+                    $G_to_A++ if ($array[5] =~ /T/);
+				} elsif ($array[8] =~ /T/){
 				    $total_A++;
-				    $A_to_T++ if ($array[4] =~ /A/);
-                    $A_to_G++ if ($array[4] =~ /C/);
-                    $A_to_C++ if ($array[4] =~ /G/);
-                    $A_to_A++ if ($array[4] =~ /T/);
+				    $A_to_T++ if ($array[5] =~ /A/);
+                    $A_to_G++ if ($array[5] =~ /C/);
+                    $A_to_C++ if ($array[5] =~ /G/);
+                    $A_to_A++ if ($array[5] =~ /T/);
 				} 
 			} else { # positive strand
-			    if ($array[7] =~ /A/){
+			    if ($array[8] =~ /A/){
 				    $total_A++;
-				    $A_to_T++ if ($array[4] =~ /T/);
-                    $A_to_G++ if ($array[4] =~ /G/);
-                    $A_to_C++ if ($array[4] =~ /C/);
-                    $A_to_A++ if ($array[4] =~ /A/);
-				} elsif ($array[7] =~ /G/){
+				    $A_to_T++ if ($array[5] =~ /T/);
+                    $A_to_G++ if ($array[5] =~ /G/);
+                    $A_to_C++ if ($array[5] =~ /C/);
+                    $A_to_A++ if ($array[5] =~ /A/);
+				} elsif ($array[8] =~ /G/){
 				    $total_G++;
-				    $G_to_T++ if ($array[4] =~ /T/);
-                    $G_to_G++ if ($array[4] =~ /G/);
-                    $G_to_C++ if ($array[4] =~ /C/);
-                    $G_to_A++ if ($array[4] =~ /A/);
-				} elsif ($array[7] =~ /C/){
+				    $G_to_T++ if ($array[5] =~ /T/);
+                    $G_to_G++ if ($array[5] =~ /G/);
+                    $G_to_C++ if ($array[5] =~ /C/);
+                    $G_to_A++ if ($array[5] =~ /A/);
+				} elsif ($array[8] =~ /C/){
 				    $total_C++;
-				    $C_to_T++ if ($array[4] =~ /T/);
-                    $C_to_G++ if ($array[4] =~ /G/);
-                    $C_to_C++ if ($array[4] =~ /C/);
-                    $C_to_A++ if ($array[4] =~ /A/);
-				} elsif ($array[7] =~ /T/){
+				    $C_to_T++ if ($array[5] =~ /T/);
+                    $C_to_G++ if ($array[5] =~ /G/);
+                    $C_to_C++ if ($array[5] =~ /C/);
+                    $C_to_A++ if ($array[5] =~ /A/);
+				} elsif ($array[8] =~ /T/){
 				    $total_T++;
-				    $T_to_T++ if ($array[4] =~ /T/);
-                    $T_to_G++ if ($array[4] =~ /G/);
-                    $T_to_C++ if ($array[4] =~ /C/);
-                    $T_to_A++ if ($array[4] =~ /A/);
+				    $T_to_T++ if ($array[5] =~ /T/);
+                    $T_to_G++ if ($array[5] =~ /G/);
+                    $T_to_C++ if ($array[5] =~ /C/);
+                    $T_to_A++ if ($array[5] =~ /A/);
 				}
 			}
 		}
