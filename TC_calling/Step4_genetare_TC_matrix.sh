@@ -15,7 +15,7 @@ scripts_root=$6
 ############ 1. Extract the intermediate file
 perl ${scripts_root}/extract_digital_expression_matrix.pl ${bam_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected.bam
 
-mv ${bam_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected_gene_cell_UMI_read.txt ${out_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected_gene_cell_UMI_read.txt
+mv ${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected_gene_cell_UMI_read.txt ${out_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected_gene_cell_UMI_read.txt
 
 ############ 2. Generate T->C matrix with rds format
 Rscript ${scripts_root}/Generate_T_C_matrix.R ${out_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected_gene_cell_UMI_read.txt ${num_core_barcode} ${out_dir}/${sample}_TC_matrix.rds

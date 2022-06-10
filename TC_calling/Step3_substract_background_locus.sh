@@ -21,9 +21,9 @@ mv ${sample_tsv_dir}/${sample}_both_strand_all_TC.tsv_q27.tsv_corrected.tsv ${ou
 mv ${sample_tsv_dir}/${sample}_both_strand_all_TC.tsv_q27.tsv_discard.tsv ${out_dir}/${sample}_both_strand_all_TC.tsv_q27.tsv_discard.tsv
 
 ############ 2. Add mutation information back to bam files
-perl ${scripts_root}/TagIntronicRead_V5.pl -read ${sample_tsv_dir}/${sample}_both_strand_all_TC.tsv_q27.tsv_corrected.tsv -bam ${bam_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.bam
+perl ${scripts_root}/TagIntronicRead_V5.pl -read ${out_dir}/${sample}_both_strand_all_TC.tsv_q27.tsv_corrected.tsv -bam ${bam_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.bam
 
-mv ${bam_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected.bam ${out_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected.bam
+mv ${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected.bam ${out_dir}/${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected.bam
 
 ### In the end you will get a bam file with "GE:Z:genename--T" or "GE:Z:genename--C" tags. 
 ### The file format is "${sample}_starAligned.sorted.merged.GeneExonTagged.TagIntronic.clean.${num_barcodes}.TagTC.corrected.bam"
